@@ -298,7 +298,7 @@ class Securimage
      * The character set to use for generating the captcha code
      * @var string
      */
-    public $charset        = 'abcdefghijkmnopqrstuvwxzyABCDEFGHJKLMNPQRSTUVWXZY0123456789';
+    public $charset        = 'abcdefghijkmnopqrstuvwxzy0123456789';
 
     /**
      * How long in seconds a captcha remains valid, after this time it will be
@@ -986,7 +986,7 @@ class Securimage
      *     $img->show(); // sends the image and appropriate headers to browser
      *     exit;
      */
-    public function show($background_image = '')
+    public function show($background_image = '', $base_64_result = false)
     {
         set_error_handler(array(&$this, 'errorHandler'));
 
@@ -994,7 +994,7 @@ class Securimage
             $this->bgimg = $background_image;
         }
 
-        $this->doImage();
+        return $this->doImage($base_64_result);
     }
 
     /**
@@ -1557,7 +1557,7 @@ class Securimage
     /**
      * The main image drawing routing, responsible for constructing the entire image and serving it
      */
-    protected function doImage()
+    protected function doImage($base_64_result)
     {
         if($this->bgimg != '' || function_exists('imagecreatetruecolor')) {
             $imagecreate = 'imagecreatetruecolor';
@@ -1614,7 +1614,23 @@ class Securimage
             $this->addSignature();
         }
 
+        if ($base_64_result) {
+//            return $this->imageToBase64($this->im);
+            return $this->im;
+        }
         $this->output();
+    }
+
+    private function imageToBase64($imageResource) {
+        // Start output buffering
+        ob_start();
+        // Output the image data to the buffer
+        imagepng($imageResource);
+        // Get the contents of the buffer
+        $imageData = ob_get_clean();
+
+        // Return base64 encoded data
+        return base64_encode($imageData);
     }
 
     /**

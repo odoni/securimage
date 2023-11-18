@@ -45,6 +45,8 @@
 // Remove the "//" from the following line for debugging problems
 // error_reporting(E_ALL); ini_set('display_errors', 1);
 
+//header("content-type: application/json");
+
 if (!class_exists('Securimage')) {
     require_once __DIR__ . '/securimage.php';
 }
@@ -52,10 +54,12 @@ if (!class_exists('Securimage')) {
 $options = array();
 
 // set id if supplied to script via HTTP GET
-if (!empty($_GET['id'])) {
-    $options['captchaId'] = $_GET['id'];
-}
+//if (!empty($_GET['id'])) {
+//    $options['captchaId'] = $_GET['id'];
+//}
 
+
+$options['captchaId'] = 123;
 $img = new Securimage($options);
 
 // You can customize the image by making changes below, some examples are included - remove the "//" to uncomment
@@ -65,10 +69,10 @@ $img = new Securimage($options);
 //$img->case_sensitive  = true;                              // true to use case sensitve codes - not recommended
 //$img->image_height    = 90;                                // height in pixels of the image
 //$img->image_width     = $img->image_height * M_E;          // a good formula for image size based on the height
-//$img->perturbation    = .75;                               // 1.0 = high distortion, higher numbers = more distortion
+$img->perturbation    = 1.0;                               // 1.0 = high distortion, higher numbers = more distortion
 //$img->image_bg_color  = new Securimage_Color("#0099CC");   // image background color
 //$img->text_color      = new Securimage_Color("#EAEAEA");   // captcha text color
-//$img->num_lines       = 8;                                 // how many lines to draw over the image
+$img->num_lines       = random_int(3, 6);                                 // how many lines to draw over the image
 //$img->line_color      = new Securimage_Color("#0000CC");   // color of lines over the image
 //$img->image_type      = SI_IMAGE_JPEG;                     // render as a jpeg image
 //$img->signature_color = new Securimage_Color(rand(0, 64),
@@ -77,5 +81,16 @@ $img = new Securimage($options);
 
 // see securimage.php for more options that can be set
 
+$img->code_length = random_int(4, 6);
 
-$img->show();  // outputs the image and content headers to the browser
+$gd_img = $img->show('', true);
+$code = $img->getCode()->code;
+$file_path = "/Users/felipe.odoni/Documents/agilepass/projects/securimage/files/" . $code . ".png";
+imagepng($gd_img, $file_path);
+
+//$obj_return = [
+//    "code" => $code,
+//    "img" => $coded_img
+//];
+//
+//echo json_encode($obj_return);

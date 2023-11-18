@@ -28,7 +28,7 @@
 <h4>Note: Running this on a PHP enabled server will likely work, but you should use example_form.php for testing instead.</h4>
 
 <div>
-  <img style="float: left; padding-right: 5px" id="captcha_image" src="securimage_show.php?<?php echo md5(uniqid(time)) ?>" alt="CAPTCHA Image">
+  <img style="float: left; padding-right: 5px" id="captcha_image" src="securimage_show.php?id=ft1z3e0bt3jmqqqwwc9taj76aq27sn2xdoiy4lv7&amp;" alt="CAPTCHA Image">
   <div id="captcha_image_audio_div">
     <audio id="captcha_image_audio" preload="none" style="display: none">
       <!-- <source id="captcha_image_source_mp3" src="securimage_play.php?id=1234&amp;format=mp3" type="audio/mpeg"> -->
@@ -71,7 +71,7 @@
 <div>
   <!-- captcha image element; the <?php echo md5(...) ?> code throughout is to prevent caching issues -->
   <img style="float: left; padding-right: 5px" id="captcha_image2" src="securimage_show.php?<?php echo md5(uniqid(time)) ?>" alt="CAPTCHA Image">
-  
+
   <!-- invisible div containing captcha audio tag, and optional flash fallback code -->
   <div id="captcha_image_audio_div2">
     <!-- the audio tag -->

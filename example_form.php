@@ -9,7 +9,7 @@ require_once __DIR__ . '/securimage.php';
 require_once __DIR__ . '/CaptchaObject.php';
 require_once __DIR__ . '/StorageAdapter/AdapterInterface.php';
 
-session_start(); // this MUST be called prior to any output including whitespaces and line breaks!
+//session_start(); // this MUST be called prior to any output including whitespaces and line breaks!
 
 $GLOBALS['DEBUG_MODE'] = 1;
 // CHANGE TO 0 TO TURN OFF DEBUG MODE
